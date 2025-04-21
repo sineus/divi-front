@@ -19,7 +19,7 @@ export type Divi = {
         "Close the vault and transfert the lamports to the issuer",
         "",
         "### Parameters",
-        "- `payment_id` - Unique payment ID to find vault PDA"
+        "- `payment_id` - Unique payment ID to find vault PDA",
       ];
       discriminator: [141, 103, 17, 126, 72, 75, 29, 29];
       accounts: [
@@ -46,7 +46,7 @@ export type Divi = {
               {
                 kind: "arg";
                 path: "paymentId";
-              }
+              },
             ];
           };
         },
@@ -78,7 +78,7 @@ export type Divi = {
                   114,
                   105,
                   116,
-                  121
+                  121,
                 ];
               },
               {
@@ -88,20 +88,20 @@ export type Divi = {
               {
                 kind: "arg";
                 path: "paymentId";
-              }
+              },
             ];
           };
         },
         {
           name: "systemProgram";
           address: "11111111111111111111111111111111";
-        }
+        },
       ];
       args: [
         {
           name: "paymentId";
           type: "u32";
-        }
+        },
       ];
     },
     {
@@ -111,7 +111,7 @@ export type Divi = {
         "",
         "### Parameters",
         "- `payment_id` - Unique payment ID to find vault PDA",
-        "- `total_amount` - This is the total amount that the primary payer must pay (alone or with other participants)"
+        "- `total_amount` - This is the total amount that the primary payer must pay (alone or with other participants)",
       ];
       discriminator: [48, 191, 163, 44, 71, 129, 63, 164];
       accounts: [
@@ -136,7 +136,7 @@ export type Divi = {
               {
                 kind: "arg";
                 path: "paymentId";
-              }
+              },
             ];
           };
         },
@@ -166,7 +166,7 @@ export type Divi = {
                   114,
                   105,
                   116,
-                  121
+                  121,
                 ];
               },
               {
@@ -176,14 +176,14 @@ export type Divi = {
               {
                 kind: "arg";
                 path: "paymentId";
-              }
+              },
             ];
           };
         },
         {
           name: "systemProgram";
           address: "11111111111111111111111111111111";
-        }
+        },
       ];
       args: [
         {
@@ -193,7 +193,7 @@ export type Divi = {
         {
           name: "totalAmount";
           type: "u64";
-        }
+        },
       ];
     },
     {
@@ -203,7 +203,7 @@ export type Divi = {
         "",
         "### Parameters",
         "- `payment_id` - Unique payment ID to find vault PDA",
-        "- `amount` - Amount to transfert"
+        "- `amount` - Amount to transfert",
       ];
       discriminator: [119, 18, 216, 65, 192, 117, 122, 220];
       accounts: [
@@ -231,7 +231,7 @@ export type Divi = {
               {
                 kind: "arg";
                 path: "paymentId";
-              }
+              },
             ];
           };
         },
@@ -262,7 +262,7 @@ export type Divi = {
                   114,
                   105,
                   116,
-                  121
+                  121,
                 ];
               },
               {
@@ -272,14 +272,14 @@ export type Divi = {
               {
                 kind: "arg";
                 path: "paymentId";
-              }
+              },
             ];
           };
         },
         {
           name: "systemProgram";
           address: "11111111111111111111111111111111";
-        }
+        },
       ];
       args: [
         {
@@ -289,15 +289,15 @@ export type Divi = {
         {
           name: "amount";
           type: "u64";
-        }
+        },
       ];
-    }
+    },
   ];
   accounts: [
     {
       name: "paymentVault";
       discriminator: [198, 111, 51, 64, 219, 236, 208, 239];
-    }
+    },
   ];
   events: [
     {
@@ -311,7 +311,7 @@ export type Divi = {
     {
       name: "vaultCreated";
       discriminator: [117, 25, 120, 254, 75, 236, 78, 115];
-    }
+    },
   ];
   errors: [
     {
@@ -393,7 +393,7 @@ export type Divi = {
       code: 6015;
       name: "vaultIsNotFinalized";
       msg: "Vault is not finalized";
-    }
+    },
   ];
   types: [
     {
@@ -416,7 +416,7 @@ export type Divi = {
           {
             name: "bump";
             type: "u8";
-          }
+          },
         ];
       };
     },
@@ -448,7 +448,7 @@ export type Divi = {
           {
             name: "authority";
             type: "pubkey";
-          }
+          },
         ];
       };
     },
@@ -468,7 +468,7 @@ export type Divi = {
           {
             name: "bump";
             type: "u8";
-          }
+          },
         ];
       };
     },
@@ -488,10 +488,10 @@ export type Divi = {
           {
             name: "bump";
             type: "u8";
-          }
+          },
         ];
       };
-    }
+    },
   ];
   constants: [
     {
@@ -503,7 +503,7 @@ export type Divi = {
       name: "vaultAuthority";
       type: "string";
       value: '"divi-vault-authority"';
-    }
+    },
   ];
 };
 
@@ -517,7 +517,7 @@ export const IDL: Divi = {
   },
   instructions: [
     {
-      name: "close_vault",
+      name: "closeVault",
       docs: [
         "Close the vault and transfert the lamports to the issuer",
         "",
@@ -548,13 +548,13 @@ export const IDL: Divi = {
               },
               {
                 kind: "arg",
-                path: "payment_id",
+                path: "paymentId",
               },
             ],
           },
         },
         {
-          name: "vault_authority",
+          name: "vaultAuthority",
           docs: ["Vault authority - a PDA that holds the SOL funds"],
           writable: true,
           pda: {
@@ -572,25 +572,25 @@ export const IDL: Divi = {
               },
               {
                 kind: "arg",
-                path: "payment_id",
+                path: "paymentId",
               },
             ],
           },
         },
         {
-          name: "system_program",
+          name: "systemProgram",
           address: "11111111111111111111111111111111",
         },
       ],
       args: [
         {
-          name: "payment_id",
+          name: "paymentId",
           type: "u32",
         },
       ],
     },
     {
-      name: "initialize_vault",
+      name: "initializeVault",
       docs: [
         "Initialize a payment vault that hosts payment infos and primary payer",
         "",
@@ -620,13 +620,13 @@ export const IDL: Divi = {
               },
               {
                 kind: "arg",
-                path: "payment_id",
+                path: "paymentId",
               },
             ],
           },
         },
         {
-          name: "vault_authority",
+          name: "vaultAuthority",
           pda: {
             seeds: [
               {
@@ -642,23 +642,23 @@ export const IDL: Divi = {
               },
               {
                 kind: "arg",
-                path: "payment_id",
+                path: "paymentId",
               },
             ],
           },
         },
         {
-          name: "system_program",
+          name: "systemProgram",
           address: "11111111111111111111111111111111",
         },
       ],
       args: [
         {
-          name: "payment_id",
+          name: "paymentId",
           type: "u32",
         },
         {
-          name: "total_amount",
+          name: "totalAmount",
           type: "u64",
         },
       ],
@@ -697,13 +697,13 @@ export const IDL: Divi = {
               },
               {
                 kind: "arg",
-                path: "payment_id",
+                path: "paymentId",
               },
             ],
           },
         },
         {
-          name: "vault_authority",
+          name: "vaultAuthority",
           writable: true,
           pda: {
             seeds: [
@@ -720,19 +720,19 @@ export const IDL: Divi = {
               },
               {
                 kind: "arg",
-                path: "payment_id",
+                path: "paymentId",
               },
             ],
           },
         },
         {
-          name: "system_program",
+          name: "systemProgram",
           address: "11111111111111111111111111111111",
         },
       ],
       args: [
         {
-          name: "payment_id",
+          name: "paymentId",
           type: "u32",
         },
         {
@@ -744,109 +744,109 @@ export const IDL: Divi = {
   ],
   accounts: [
     {
-      name: "PaymentVault",
+      name: "paymentVault",
       discriminator: [198, 111, 51, 64, 219, 236, 208, 239],
     },
   ],
   events: [
     {
-      name: "ParticipantPaid",
+      name: "participantPaid",
       discriminator: [233, 165, 123, 165, 246, 201, 83, 87],
     },
     {
-      name: "VaultCompleted",
+      name: "vaultCompleted",
       discriminator: [174, 72, 181, 184, 121, 48, 107, 227],
     },
     {
-      name: "VaultCreated",
+      name: "vaultCreated",
       discriminator: [117, 25, 120, 254, 75, 236, 78, 115],
     },
   ],
   errors: [
     {
       code: 6000,
-      name: "StringTooLong",
+      name: "stringTooLong",
       msg: "String is too long",
     },
     {
       code: 6001,
-      name: "TitleTooLong",
+      name: "titleTooLong",
       msg: "Title is too long",
     },
     {
       code: 6002,
-      name: "DescriptionTooLong",
+      name: "descriptionTooLong",
       msg: "Description is too long",
     },
     {
       code: 6003,
-      name: "CoverTooLong",
+      name: "coverTooLong",
       msg: "Cover is too long",
     },
     {
       code: 6004,
-      name: "DirectorTooLong",
+      name: "directorTooLong",
       msg: "Director is too long",
     },
     {
       code: 6005,
-      name: "TooManyActors",
+      name: "tooManyActors",
       msg: "Too many actors",
     },
     {
       code: 6006,
-      name: "InvalidPDA",
+      name: "invalidPda",
       msg: "Invalid PDA for the movie",
     },
     {
       code: 6007,
-      name: "UnauthorizedAccess",
+      name: "unauthorizedAccess",
       msg: "Unauthorized access, you're not the creator of this movie",
     },
     {
       code: 6008,
-      name: "ShareCalculationError",
+      name: "shareCalculationError",
       msg: "An error occurred while calculating percentage",
     },
     {
       code: 6009,
-      name: "ParticipantAlreadyPaid",
+      name: "participantAlreadyPaid",
       msg: "Participant has already paid",
     },
     {
       code: 6010,
-      name: "ParticipantNotExist",
+      name: "participantNotExist",
       msg: "Participant doesn't exists",
     },
     {
       code: 6011,
-      name: "AmountIsGreaterThanVaultTotalAmount",
+      name: "amountIsGreaterThanVaultTotalAmount",
       msg: "The amount is greater than the vault total amount",
     },
     {
       code: 6012,
-      name: "AmountIsGreaterThanRemainingVaultAmount",
+      name: "amountIsGreaterThanRemainingVaultAmount",
       msg: "The amount is greater than the remaining vault amount",
     },
     {
       code: 6013,
-      name: "InvalidVaultAuthority",
+      name: "invalidVaultAuthority",
       msg: "The vault issuer is invalid",
     },
     {
       code: 6014,
-      name: "VaultIsAlreadyFinalized",
+      name: "vaultIsAlreadyFinalized",
       msg: "Vault is already finalized",
     },
     {
       code: 6015,
-      name: "VaultIsNotFinalized",
+      name: "vaultIsNotFinalized",
       msg: "Vault is not finalized",
     },
   ],
   types: [
     {
-      name: "ParticipantPaid",
+      name: "participantPaid",
       type: {
         kind: "struct",
         fields: [
@@ -859,7 +859,7 @@ export const IDL: Divi = {
             type: "pubkey",
           },
           {
-            name: "payment_id",
+            name: "paymentId",
             type: "u32",
           },
           {
@@ -870,7 +870,7 @@ export const IDL: Divi = {
       },
     },
     {
-      name: "PaymentVault",
+      name: "paymentVault",
       type: {
         kind: "struct",
         fields: [
@@ -879,11 +879,11 @@ export const IDL: Divi = {
             type: "pubkey",
           },
           {
-            name: "total_amount",
+            name: "totalAmount",
             type: "u64",
           },
           {
-            name: "is_finalized",
+            name: "isFinalized",
             type: "bool",
           },
           {
@@ -891,7 +891,7 @@ export const IDL: Divi = {
             type: "u8",
           },
           {
-            name: "payment_id",
+            name: "paymentId",
             type: "u32",
           },
           {
@@ -902,7 +902,7 @@ export const IDL: Divi = {
       },
     },
     {
-      name: "VaultCompleted",
+      name: "vaultCompleted",
       type: {
         kind: "struct",
         fields: [
@@ -911,7 +911,7 @@ export const IDL: Divi = {
             type: "pubkey",
           },
           {
-            name: "payment_id",
+            name: "paymentId",
             type: "u32",
           },
           {
@@ -922,7 +922,7 @@ export const IDL: Divi = {
       },
     },
     {
-      name: "VaultCreated",
+      name: "vaultCreated",
       type: {
         kind: "struct",
         fields: [
@@ -931,7 +931,7 @@ export const IDL: Divi = {
             type: "pubkey",
           },
           {
-            name: "payment_id",
+            name: "paymentId",
             type: "u32",
           },
           {
@@ -944,12 +944,12 @@ export const IDL: Divi = {
   ],
   constants: [
     {
-      name: "VAULT",
+      name: "vault",
       type: "string",
       value: '"divi-vault"',
     },
     {
-      name: "VAULT_AUTHORITY",
+      name: "vaultAuthority",
       type: "string",
       value: '"divi-vault-authority"',
     },

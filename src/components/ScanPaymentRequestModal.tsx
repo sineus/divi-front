@@ -9,17 +9,15 @@ import {
   centerText,
   outline,
   Scanner,
-  useDevices,
 } from "@yudiel/react-qr-scanner";
 import { useState } from "react";
 import { LuScanBarcode } from "react-icons/lu";
 
 export default function ScanPaymentRequestModal() {
-  const [deviceId, setDeviceId] = useState<string | undefined>(undefined);
-  const [tracker, setTracker] = useState<string | undefined>("centerText");
+  const [deviceId] = useState<string | undefined>(undefined);
+  const [tracker] = useState<string | undefined>("centerText");
   const [pause, setPause] = useState(false);
-  const devices = useDevices();
-  const { address, isConnected } = useAppKitAccount();
+  const { address } = useAppKitAccount();
   const { accessToken } = useUser();
   const dialog = useDialog();
   const queryClient = useQueryClient();

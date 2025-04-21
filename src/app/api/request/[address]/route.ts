@@ -15,7 +15,7 @@ export async function DELETE(
 
   console.log(payload);
 
-  let { error } = await supabase
+  const { error } = await supabase
     .from("requests")
     .delete()
     .eq("address", address);
@@ -32,13 +32,9 @@ export async function GET(
   { params }: { params: Promise<{ address: string }> }
 ) {
   const supabase = await createServerClient();
-  const token = req.headers.get("authorization").split(" ")[1];
   const { address } = await params;
 
-  const decode = createDecoder();
-  const payload = decode(token);
-
-  let { data: request, error } = await supabase
+  const { data: request, error } = await supabase
     .from("requests")
     .select()
     .eq("address", address)

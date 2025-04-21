@@ -8,7 +8,7 @@ export async function GET(req: Request) {
   const decode = createDecoder();
   const payload = decode(token);
 
-  let { data: participations, error: participationError } = await supabase
+  const { data: participations, error: participationError } = await supabase
     .from("request_participations")
     .select()
     .order("createdAt", { ascending: false })
@@ -19,7 +19,7 @@ export async function GET(req: Request) {
   }
 
   for (const participation of participations) {
-    let { data, error } = await supabase
+    const { data, error } = await supabase
       .from("requests")
       .select()
       .eq("address", participation.requestAddress);

@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const decode = createDecoder();
   const payload = decode(token);
 
-  let { data, error } = await supabase
+  const { data, error } = await supabase
     .from("requests")
     .insert([
       {
@@ -43,7 +43,7 @@ export async function GET(req: Request) {
 
   console.log(payload);
 
-  let { data: requests, error } = await supabase
+  const { data: requests, error } = await supabase
     .from("requests")
     .select()
     .order("createdAt", { ascending: false })
@@ -54,7 +54,7 @@ export async function GET(req: Request) {
   }
 
   for (const request of requests) {
-    let { data } = await supabase
+    const { data } = await supabase
       .from("request_participations")
       .select()
       .eq("requestAddress", request.address);

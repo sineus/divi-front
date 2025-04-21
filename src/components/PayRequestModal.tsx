@@ -1,7 +1,6 @@
 "use client";
 
 import { useProgram } from "@/hooks/useProgram";
-import { useUser } from "@/providers/UserProvider";
 import { RequestParticipation } from "@/types";
 import {
   Button,
@@ -14,9 +13,7 @@ import {
   Text,
   useDialog,
 } from "@chakra-ui/react";
-import { useAppKitAccount } from "@reown/appkit/react";
-import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export default function PayRequestModal({
   participation,
@@ -24,9 +21,6 @@ export default function PayRequestModal({
   participation: RequestParticipation;
 }) {
   const dialog = useDialog();
-  const { accessToken } = useUser();
-  const { address } = useAppKitAccount();
-  const queryClient = useQueryClient();
   const [amount, setAmount] = useState<number>(1);
   const { pay } = useProgram();
 
@@ -34,7 +28,9 @@ export default function PayRequestModal({
     try {
       await pay.mutateAsync({ participation, amount });
       dialog.setOpen(false);
-    } catch (_) {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -58,7 +54,9 @@ export default function PayRequestModal({
                   <Input
                     placeholder="0"
                     value={amount}
-                    onInput={(e) => setAmount(e.target.value)}
+                    onInput={(e: ChangeEvent<HTMLInputElement>) =>
+                      setAmount(+e.target.value)
+                    }
                   />
                 </InputGroup>
               </Field.Root>

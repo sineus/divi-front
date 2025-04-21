@@ -2,15 +2,12 @@
 
 import { User } from "@/types";
 import { Provider } from "@reown/appkit-adapter-solana";
-import {
-  useAppKitAccount,
-  useAppKitProvider,
-  useDisconnect,
-} from "@reown/appkit/react";
+import { useAppKitAccount, useAppKitProvider } from "@reown/appkit/react";
 import base58 from "bs58";
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -21,13 +18,12 @@ const UserContext = createContext<{ user: User; accessToken: string }>(null);
 export const useUser = () => useContext(UserContext);
 
 export default function UserProvider(props: PropsWithChildren) {
-  const { disconnect } = useDisconnect();
   const [user, setUser] = useState<User>();
   const [accessToken, setAccessToken] = useState<string>();
-  const { address, isConnected } = useAppKitAccount();
+  const { address } = useAppKitAccount();
   const { walletProvider } = useAppKitProvider<Provider>("solana");
 
-  async function authenticate() {
+  const authenticate = useCallback(async () => {
     const message = "Please sign the message below to authenticate yourself";
     const signature = await walletProvider.signMessage(
       new TextEncoder().encode(message)
@@ -50,7 +46,7 @@ export default function UserProvider(props: PropsWithChildren) {
 
     setUser(res.user);
     setAccessToken(res.accessToken);
-  }
+  }, [address, walletProvider]);
 
   useEffect(() => {
     if (!walletProvider) {
@@ -58,7 +54,7 @@ export default function UserProvider(props: PropsWithChildren) {
     }
 
     authenticate();
-  }, [walletProvider]);
+  }, [walletProvider, authenticate]);
 
   return (
     <UserContext.Provider

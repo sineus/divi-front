@@ -12,7 +12,7 @@ import {
   Text,
   useDialog,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { LuPlus } from "react-icons/lu";
 
 export default function CreatePaymentRequestModal() {
@@ -24,7 +24,9 @@ export default function CreatePaymentRequestModal() {
     try {
       await createVault.mutateAsync(amount);
       dialog.setOpen(false);
-    } catch (_) {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -49,7 +51,9 @@ export default function CreatePaymentRequestModal() {
                   <Input
                     placeholder="0"
                     value={amount}
-                    onInput={(e) => setAmount(e.target.value)}
+                    onInput={(e: ChangeEvent<HTMLInputElement>) =>
+                      setAmount(+e.target.value)
+                    }
                   />
                 </InputGroup>
               </Field.Root>

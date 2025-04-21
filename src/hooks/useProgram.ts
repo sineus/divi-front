@@ -80,9 +80,8 @@ export function useProgram() {
 
       const transaction = new VersionedTransaction(messageV0);
 
-      const signature = await walletProvider.signAndSendTransaction(
-        transaction
-      );
+      const signature =
+        await walletProvider.signAndSendTransaction(transaction);
 
       console.log(signature);
 
@@ -146,9 +145,10 @@ export function useProgram() {
 
       const transaction = new VersionedTransaction(messageV0);
 
-      const signature = await walletProvider.signAndSendTransaction(
-        transaction
-      );
+      const signature =
+        await walletProvider.signAndSendTransaction(transaction);
+
+      console.log(signature);
 
       await fetch(
         `/api/request/${payload.participation.request?.address}/pay`,

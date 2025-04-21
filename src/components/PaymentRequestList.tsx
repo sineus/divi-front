@@ -9,8 +9,8 @@ import PaymentRequestItem from "./PaymentRequestItem";
 
 export default function PaymentRequestList() {
   const { accessToken } = useUser();
-  const { address, isConnected } = useAppKitAccount();
-  const { data: requests = [], isLoading } = useQuery({
+  const { address } = useAppKitAccount();
+  const { data: requests = [] } = useQuery({
     queryKey: ["requests", address],
     async queryFn() {
       const req = await fetch(`/api/request`, {

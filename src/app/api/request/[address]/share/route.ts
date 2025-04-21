@@ -13,7 +13,7 @@ export async function POST(
   const decode = createDecoder();
   const payload = decode(token);
 
-  let { data, error } = await supabase
+  const { data, error } = await supabase
     .from("request_participations")
     .insert([
       {

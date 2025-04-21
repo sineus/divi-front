@@ -13,7 +13,7 @@ export async function POST(
   const decode = createDecoder();
   const payload = decode(token);
 
-  let { data, error } = await supabase
+  const { data, error } = await supabase
     .from("request_participations")
     .update({ hasPaid: true, amount: body.amount })
     .eq("requestAddress", address)
@@ -26,7 +26,7 @@ export async function POST(
     return Response.error();
   }
 
-  let { data: participations } = await supabase
+  const { data: participations } = await supabase
     .from("request_participations")
     .select()
     .eq("requestAddress", address);
@@ -36,7 +36,7 @@ export async function POST(
     return prev;
   }, 0);
 
-  let { data: request } = await supabase
+  const { data: request } = await supabase
     .from("requests")
     .select()
     .eq("address", address)

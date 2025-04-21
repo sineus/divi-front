@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
   let user: { address: string; id: string };
 
-  let { data } = await supabase
+  const { data } = await supabase
     .from("users")
     .select("*")
     .eq("address", body.address)
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   if (data) {
     user = data;
   } else {
-    let { data, error } = await supabase
+    const { data, error } = await supabase
       .from("users")
       .insert([
         {

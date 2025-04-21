@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@/providers/UserProvider";
 import { RequestParticipation } from "@/types";
 import { copyWalletAddress } from "@/utils/copyWalletAddress";
 import { getShortWalletAddress } from "@/utils/getShortWalletAddress";
@@ -12,8 +11,6 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-import { useAppKitAccount } from "@reown/appkit/react";
-import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useMemo } from "react";
 import { LuCopy } from "react-icons/lu";
@@ -25,10 +22,6 @@ export default function PaymentParticipationItem({
 }: {
   participation: RequestParticipation;
 }) {
-  const { accessToken } = useUser();
-  const queryClient = useQueryClient();
-  const { address } = useAppKitAccount();
-
   const createdAt = useMemo(
     () => format(participation?.createdAt, "yyyy-MM-dd HH:mm:ss"),
     [participation?.createdAt]

@@ -9,7 +9,7 @@ import PaymentParticipationItem from "./PaymenParticipationItem";
 
 export default function PaymentParticipationList() {
   const { accessToken } = useUser();
-  const { address, isConnected } = useAppKitAccount();
+  const { address } = useAppKitAccount();
   const { data: participations = [], isLoading } = useQuery({
     queryKey: ["participations", address],
     async queryFn() {

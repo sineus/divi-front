@@ -7,10 +7,8 @@ import PaymentRequestList from "@/components/PaymentRequestList";
 import ScanPaymentRequestModal from "@/components/ScanPaymentRequestModal";
 import { useUser } from "@/providers/UserProvider";
 import { Box, Container, Heading, Spacer, Stack } from "@chakra-ui/react";
-import { useAppKitAccount } from "@reown/appkit/react";
 
 export default function Home() {
-  const { address, isConnected } = useAppKitAccount();
   const { accessToken } = useUser();
 
   return Boolean(accessToken) ? (
