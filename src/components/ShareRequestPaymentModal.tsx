@@ -25,7 +25,7 @@ export default function SharePaymentRequestModal({
             </Dialog.Header>
             <Dialog.Body>
               <Canvas
-                text={`http://localhost:3000/api/request/${request?.address}/share`}
+                text={`/api/request/${request?.address}/share`}
                 options={{
                   errorCorrectionLevel: "M",
                   margin: 3,
