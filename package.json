@@ -9,17 +9,43 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.16.0",
+    "@coral-xyz/anchor": "^0.31.0",
+    "@emotion/react": "^11.14.0",
+    "@reown/appkit": "^1.7.3",
+    "@reown/appkit-adapter-solana": "^1.7.3",
+    "@solana/wallet-adapter-base": "^0.9.25",
+    "@solana/wallet-adapter-react": "^0.15.37",
+    "@solana/wallet-adapter-react-ui": "^0.9.37",
+    "@solana/wallet-adapter-wallets": "^0.19.35",
+    "@solana/web3.js": "^1.98.0",
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.4",
+    "@tanstack/react-query": "^5.74.4",
+    "@yudiel/react-qr-scanner": "^2.2.1",
+    "date-fns": "^4.1.0",
+    "fast-jwt": "^6.0.1",
+    "next": "15.3.0",
+    "next-qrcode": "^2.5.1",
+    "next-themes": "^0.4.6",
+    "qr-scanner": "^1.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.0"
+    "react-icons": "^5.5.0",
+    "react-qr-scanner": "^1.0.0-alpha.11",
+    "tweetnacl": "^1.0.3",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
-    "@eslint/eslintrc": "^3"
-  }
+    "typescript": "^5"
+  },
+  "main": "index.js",
+  "author": "David Kubler <dk@artrade.app>",
+  "license": "MIT"
 }

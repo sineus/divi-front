@@ -1,6 +1,10 @@
+import { Provider } from "@/components/ui/provider";
+import ContextProvider from "@/context";
+import AnchorProvider from "@/providers/AnchorProvider";
+import TanstackProvider from "@/providers/TanstackProvider";
+import UserProvider from "@/providers/UserProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,10 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
-      </body>
-    </html>
+    <TanstackProvider>
+      <html lang="en" suppressHydrationWarning={true}>
+        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+          <Provider>
+            <ContextProvider>
+              <AnchorProvider>
+                <UserProvider>{children}</UserProvider>
+              </AnchorProvider>
+            </ContextProvider>
+          </Provider>
+        </body>
+      </html>
+    </TanstackProvider>
   );
 }
