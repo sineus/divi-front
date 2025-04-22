@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/providers/UserProvider";
+import { useHttp } from "@/hooks/useHttp";
 import { Button, Dialog, Portal, useDialog } from "@chakra-ui/react";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -18,21 +18,15 @@ export default function ScanPaymentRequestModal() {
   const [tracker] = useState<string | undefined>("centerText");
   const [pause, setPause] = useState(false);
   const { address } = useAppKitAccount();
-  const { accessToken } = useUser();
   const dialog = useDialog();
   const queryClient = useQueryClient();
+  const http = useHttp();
 
   const handleScan = async (data: string) => {
     setPause(true);
     console.log(data);
 
-    await fetch(data, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    await http.post(data);
 
     queryClient.invalidateQueries({
       queryKey: ["participations", address],

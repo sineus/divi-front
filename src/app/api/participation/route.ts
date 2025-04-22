@@ -1,18 +1,14 @@
 import { createServerClient } from "@/utils/supabase";
-import { createDecoder } from "fast-jwt";
 
 export async function GET(req: Request) {
   const supabase = await createServerClient();
-  const token = req.headers.get("authorization").split(" ")[1];
-
-  const decode = createDecoder();
-  const payload = decode(token);
+  const address = req.headers.get("x-user-wallet");
 
   const { data: participations, error: participationError } = await supabase
     .from("request_participations")
     .select()
     .order("createdAt", { ascending: false })
-    .eq("payer", payload.address);
+    .eq("payer", address);
 
   if (participationError) {
     return Response.error();

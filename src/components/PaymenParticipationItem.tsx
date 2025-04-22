@@ -49,24 +49,24 @@ export default function PaymentParticipationItem({
       <Separator />
       <Stack>
         <Stack direction="row">
-          <Text color="whiteAlpha.600">Participants</Text>
+          <Text color="whiteAlpha.600">My participation</Text>
           <Spacer />
-          <Text>{participation.request?.participants?.length}</Text>
+          <Text>{participation.amount} SOL</Text>
         </Stack>
 
         <Stack direction="row">
           <Text color="whiteAlpha.600">Status</Text>
           <Spacer />
           <Tag.Root>
-            <Tag.Label>
-              {participation.hasPaid ? "Completed" : "Pending"}
-            </Tag.Label>
+            <Tag.Label>{participation.hasPaid ? "Paid" : "Pending"}</Tag.Label>
           </Tag.Root>
         </Stack>
       </Stack>
       <Stack direction="row" gap="4">
         <SharePaymentRequestModal request={participation.request} />
-        <PayRequestModal participation={participation} />
+        {!participation.hasPaid && (
+          <PayRequestModal participation={participation} />
+        )}
       </Stack>
     </Stack>
   );

@@ -54,8 +54,10 @@ export async function POST(req: Request) {
     user = data;
   }
 
+  const accessToken = await createToken(user);
+
   return Response.json({
     user,
-    accessToken: createToken(user),
+    accessToken,
   });
 }

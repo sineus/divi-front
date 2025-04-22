@@ -1,14 +1,10 @@
 import { PaymentRequest } from "@/types";
 import { createServerClient } from "@/utils/supabase";
-import { createDecoder } from "fast-jwt";
 
 export async function POST(req: Request) {
   const body = await req.json();
   const supabase = await createServerClient();
-  const token = req.headers.get("authorization").split(" ")[1];
-
-  const decode = createDecoder();
-  const payload = decode(token);
+  const address = req.headers.get("x-user-wallet");
 
   const { data, error } = await supabase
     .from("requests")
@@ -17,7 +13,7 @@ export async function POST(req: Request) {
         address: body.address,
         amount: body.amount,
         currency: body.currency,
-        issuer: payload.address,
+        issuer: address,
         hasFinalized: false,
         paymentId: body.paymentId,
         tx: body.tx,
@@ -36,18 +32,13 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   const supabase = await createServerClient();
-  const token = req.headers.get("authorization").split(" ")[1];
-
-  const decode = createDecoder();
-  const payload = decode(token);
-
-  console.log(payload);
+  const address = req.headers.get("x-user-wallet");
 
   const { data: requests, error } = await supabase
     .from("requests")
     .select()
     .order("createdAt", { ascending: false })
-    .eq("issuer", payload.address);
+    .eq("issuer", address);
 
   if (error) {
     return Response.error();

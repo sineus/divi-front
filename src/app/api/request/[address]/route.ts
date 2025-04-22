@@ -1,5 +1,4 @@
 import { createServerClient } from "@/utils/supabase";
-import { createDecoder } from "fast-jwt";
 import { NextRequest } from "next/server";
 
 export async function DELETE(
@@ -7,13 +6,7 @@ export async function DELETE(
   { params }: { params: Promise<{ address: string }> }
 ) {
   const supabase = await createServerClient();
-  const token = req.headers.get("authorization").split(" ")[1];
   const { address } = await params;
-
-  const decode = createDecoder();
-  const payload = decode(token);
-
-  console.log(payload);
 
   const { error } = await supabase
     .from("requests")

@@ -1,7 +1,7 @@
 "use client";
 
+import { useHttp } from "@/hooks/useHttp";
 import { useProgram } from "@/hooks/useProgram";
-import { useUser } from "@/providers/UserProvider";
 import { PaymentRequest } from "@/types";
 import { copyWalletAddress } from "@/utils/copyWalletAddress";
 import { getShortWalletAddress } from "@/utils/getShortWalletAddress";
@@ -32,10 +32,10 @@ export default function PaymentRequestItem({
 }: {
   request: PaymentRequest;
 }) {
-  const { accessToken } = useUser();
   const queryClient = useQueryClient();
   const { address } = useAppKitAccount();
   const { closeVault } = useProgram();
+  const http = useHttp();
 
   const createdAt = useMemo(
     () => format(request?.createdAt, "yyyy-MM-dd HH:mm:ss"),
@@ -44,13 +44,7 @@ export default function PaymentRequestItem({
 
   const cancel = useMutation({
     async mutationFn() {
-      await fetch(`/api/request/${request?.address}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      return http.delete(`/request/${request?.address}`);
     },
     onSuccess() {
       queryClient.invalidateQueries({

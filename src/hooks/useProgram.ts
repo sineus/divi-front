@@ -2,7 +2,6 @@
 
 import { VAULT, VAULT_AUTHORITY } from "@/constants";
 import { useAnchor } from "@/providers/AnchorProvider";
-import { useUser } from "@/providers/UserProvider";
 import { PaymentRequest, RequestParticipation } from "@/types";
 import * as anchor from "@coral-xyz/anchor";
 import { Provider } from "@reown/appkit-adapter-solana";
@@ -14,14 +13,15 @@ import {
   VersionedTransaction,
 } from "@solana/web3.js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useHttp } from "./useHttp";
 
 export function useProgram() {
-  const { accessToken } = useUser();
   const { address } = useAppKitAccount();
   const { walletProvider } = useAppKitProvider<Provider>("solana");
   const queryClient = useQueryClient();
   const { program } = useAnchor();
   const { connection } = useAppKitConnection();
+  const http = useHttp();
 
   function getPdas(paymentId: number, issuer: PublicKey) {
     const paymentIdBuffer = new anchor.BN(paymentId).toArrayLike(
@@ -85,23 +85,14 @@ export function useProgram() {
 
       console.log(signature);
 
-      const req = await fetch("/api/request", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          address: pdas.vault.toBase58(),
-          amount,
-          currency: "SOL",
-          issuer: walletProvider.publicKey.toBase58(),
-          paymentId,
-          tx: signature,
-        }),
+      await http.post("/request", {
+        address: pdas.vault.toBase58(),
+        amount,
+        currency: "SOL",
+        issuer: walletProvider.publicKey.toBase58(),
+        paymentId,
+        tx: signature,
       });
-
-      await req.json();
     },
     onSuccess() {
       queryClient.invalidateQueries({
@@ -150,17 +141,10 @@ export function useProgram() {
 
       console.log(signature);
 
-      await fetch(
-        `/api/request/${payload.participation.request?.address}/pay`,
+      await http.post(
+        `/request/${payload.participation.request?.address}/pay`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify({
-            amount: payload.amount,
-          }),
+          amount: payload.amount,
         }
       );
     },
@@ -205,15 +189,8 @@ export function useProgram() {
         }
       );
 
-      await fetch(`/api/request/${request?.address}/close`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          tx: signature,
-        }),
+      await http.post(`/request/${request?.address}/close`, {
+        tx: signature,
       });
     },
     onSuccess() {

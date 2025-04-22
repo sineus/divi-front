@@ -1,25 +1,21 @@
 import { PaymentRequest } from "@/types";
 import { createServerClient } from "@/utils/supabase";
-import { createDecoder } from "fast-jwt";
 
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ address: string }> }
 ) {
   const supabase = await createServerClient();
-  const token = req.headers.get("authorization").split(" ")[1];
   const { address } = await params;
-
-  const decode = createDecoder();
-  const payload = decode(token);
+  const walletAddress = req.headers.get("x-user-wallet");
 
   const { data, error } = await supabase
     .from("request_participations")
     .insert([
       {
-        amount: 10,
+        amount: 0,
         requestAddress: address,
-        payer: payload.address,
+        payer: walletAddress,
       },
     ])
     .select()
