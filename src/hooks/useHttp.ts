@@ -1,3 +1,5 @@
+"use client";
+
 import { useUser } from "@/providers/UserProvider";
 import { useDisconnect } from "@reown/appkit/react";
 import axios from "axios";
@@ -8,7 +10,7 @@ declare module "axios" {
 }
 
 export function useHttp() {
-  const { setAccessToken, setUser, user, accessToken } = useUser();
+  const userCtx = useUser();
   const { disconnect } = useDisconnect();
 
   return useMemo(() => {
@@ -17,7 +19,9 @@ export function useHttp() {
     });
 
     http.interceptors.request.use((req) => {
-      req.headers.setAuthorization(`Bearer ${accessToken}`);
+      if (userCtx?.accessToken) {
+        req.headers.setAuthorization(`Bearer ${userCtx.accessToken}`);
+      }
 
       return req;
     });
@@ -28,13 +32,15 @@ export function useHttp() {
       },
       function (error) {
         if (error.status === 401) {
-          setAccessToken(null);
-          setUser(null);
+          if (userCtx) {
+            userCtx.setAccessToken(null);
+            userCtx.setUser(null);
 
-          localStorage.removeItem("user");
-          localStorage.removeItem("accessToken");
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
 
-          disconnect();
+            disconnect();
+          }
         }
 
         return Promise.reject(error);
@@ -42,5 +48,5 @@ export function useHttp() {
     );
 
     return http;
-  }, [user, accessToken, disconnect]);
+  }, [userCtx, disconnect]);
 }
