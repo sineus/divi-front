@@ -1,5 +1,6 @@
 "use client";
 
+import { useHttp } from "@/hooks/useHttp";
 import { User } from "@/types";
 import { Provider } from "@reown/appkit-adapter-solana";
 import {
@@ -34,6 +35,7 @@ export default function UserProvider(props: PropsWithChildren) {
   const { address } = useAppKitAccount();
   const { walletProvider } = useAppKitProvider<Provider>("solana");
   const { disconnect } = useDisconnect();
+  const http = useHttp();
 
   const authenticate = useCallback(async () => {
     if (localStorage.getItem("accessToken")) {
@@ -57,18 +59,10 @@ export default function UserProvider(props: PropsWithChildren) {
 
     console.log(signature);
 
-    const signinResponse = await fetch("/api/auth/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        address,
-        signature: base58.encode(signature),
-      }),
+    const res = await http.post("/api/auth/signin", {
+      address,
+      signature: base58.encode(signature),
     });
-
-    const res = await signinResponse.json();
 
     setUser(res.user);
     setAccessToken(res.accessToken);
