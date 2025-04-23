@@ -59,7 +59,7 @@ export default function UserProvider(props: PropsWithChildren) {
 
     console.log(signature);
 
-    const res = await http.post("/api/auth/signin", {
+    const res = await http.post("/auth/signin", {
       address,
       signature: base58.encode(signature),
     });
